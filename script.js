@@ -1,9 +1,11 @@
-const btn = document.querySelector(".btn");
+const generateBtn = document.querySelector(".generate");
 const container = document.querySelector(".container");
-btn.addEventListener("click", (event)=>{
+
+generateBtn.addEventListener("click", (event)=>{
     container.innerHTML = ""; 
     promptForInput();
 });
+
 //user input for the number of squares
 function promptForInput(){
     let num; 
@@ -33,32 +35,64 @@ function promptForInput(){
     }
 }
 
+
+//Generate Random Colors
+
+function getRandomColor(){
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for(let i = 0; i < 6; i++){
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+//Creating the grid
 function createGrid(num){
     //Creating the square divs.
-    const container_size = "680px";
     const size = 680;
+    const container_size = `${size}px` 
     container.style.height = container_size;
     container.style.width = container_size;
+    
 
     for(let i = 0; i < num*num; i++){
         const box = document.createElement("div");
         box.classList.add("box");
         container.appendChild(box);
-        box.style.height = (size/num) + "px";
-        box.style.width = (size/num) + "px";
+        box.style.height = `${size/num}px`;
+        box.style.width = `${size/num}px`;
     }
-    //Hover Effect
 
+    //Hover Effect
     const boxes =  document.querySelectorAll(".box");
+    let color = getRandomColor();
 
     boxes.forEach(box => {
         box.addEventListener("mouseenter", (event) => {
-            event.target.style.backgroundColor = "green";
+            event.target.style.backgroundColor = "lightpink";
+            // let opacity = parseFloat(event.target.style.opacity); 
+            // if(opacity > 0){
+            //     opacity -= .10;
+            //     event.target.style.opacity = opacity; 
+            // }else{
+            //     event.target.style.opacity = 1;
+            // }
+
         });
 
         box.addEventListener("mouseleave", (event) => {
-            event.target.style.backgroundColor = "red";
-        })
+            // event.target.style.backgroundColor = color;
+            event.target.style.backgroundColor = getRandomColor();
+        });
     });
-    }
+}
+
+const resetBtn = document.querySelector(".reset");
+resetBtn.addEventListener(("click"), ()=>{
+    container.innerHTML = "";
+    container.style.width = 0;
+    container.style.height = 0;
+});
+
 
