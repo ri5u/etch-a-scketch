@@ -62,28 +62,29 @@ function createGrid(num){
         container.appendChild(box);
         box.style.height = `${size/num}px`;
         box.style.width = `${size/num}px`;
+        box.style.opacity = 1;
     }
 
     //Hover Effect
     const boxes =  document.querySelectorAll(".box");
     let color = getRandomColor();
 
+
     boxes.forEach(box => {
         box.addEventListener("mouseenter", (event) => {
             event.target.style.backgroundColor = "lightpink";
-            // let opacity = parseFloat(event.target.style.opacity); 
-            // if(opacity > 0){
-            //     opacity -= .10;
-            //     event.target.style.opacity = opacity; 
-            // }else{
-            //     event.target.style.opacity = 1;
-            // }
-
+            let opacity =  parseFloat(event.target.style.opacity);
+            if(opacity > 0){
+                opacity -= .1;
+                event.target.style.opacity = opacity;
+            }
+            console.log(opacity);  
+            
         });
 
         box.addEventListener("mouseleave", (event) => {
-            // event.target.style.backgroundColor = color;
-            event.target.style.backgroundColor = getRandomColor();
+            event.target.style.backgroundColor = color;
+            // event.target.style.backgroundColor = getRandomColor();
         });
     });
 }
